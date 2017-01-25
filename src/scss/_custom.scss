@@ -1,8 +1,17 @@
 #controls {
   position: absolute;
   top: 0;
-  background-color: hsla(0,0,0,0.5);
+  background-color: hsla(0,0,0,0.3);
   color: white;
   padding: 30px;
 }
 
+#header {
+  height: 90vh;
+}
+
+.artwork {
+  position: relative;
+  max-height: 90%;
+  margin: 20px;
+}
