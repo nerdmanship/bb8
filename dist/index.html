@@ -10,13 +10,13 @@
     <title>Nerdmanship template</title>
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="stylesheet" href="css/app.css">
-    <script src="js/modernizr-2.8.3.min.js"></script>
+    <!--script(src='js/modernizr-2.8.3.min.js')-->
   </head>
   <body>
     <section id="header">
       <svg class="artwork" data-bb8="svg" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 2935 2935" xmlns:xlink="http://www.w3.org/1999/xlink">
         <defs>
-          <circle id="path-1" cx="1467.5" cy="1467.5" r="1467.5"></circle>
+          <circle id="path-1" data-bb8="largeMask" cx="1467.5" cy="1467.5" r="1467.5"></circle>
           <path id="path-3" d="M0 10h3378v1068H0z"></path>
           <mask id="mask-4" width="3378" height="1068" x="0" y="0" fill="white">
             <use xlink:href="#path-3"></use>
@@ -653,13 +653,8 @@
         </g>
       </svg>
     </section>
-    <section id="controls">
-      <div id="stats">
-        <p>Time: <span id="time">1</span><span> / </span><span id="duration">0</span></p>
-        <button id="togglePlay">Play/Pause</button>
-      </div>
-    </section>
+    <!--include controls.pug-->
     <script src="js/TweenMax.js"></script>
-    <script src="js/app.js"></script>
+    <script src="js/app4.js"></script>
   </body>
 </html>

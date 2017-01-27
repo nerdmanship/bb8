@@ -2455,6 +2455,33 @@
 		"sC": 1,
 		"tS": 1
 		},
+	"\/src\/js\/app2.js": {
+		"ft": 64,
+		"mi": 0,
+		"oA": 0,
+		"oAP": "\/dist\/js\/app2.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 1
+		},
+	"\/src\/js\/app3.js": {
+		"ft": 64,
+		"mi": 0,
+		"oA": 0,
+		"oAP": "\/dist\/js\/app3.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 1
+		},
+	"\/src\/js\/app4.js": {
+		"ft": 64,
+		"mi": 0,
+		"oA": 0,
+		"oAP": "\/dist\/js\/app4.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 1
+		},
 	"\/src\/js\/controls.js": {
 		"ft": 64,
 		"mi": 0,
@@ -2557,7 +2584,7 @@
 	"displayValue": "bb8",
 	"displayValueWasSetByUser": 0,
 	"iconImageName": "meme-doge",
-	"lastBuiltDate": 507052660
+	"lastBuiltDate": 507222495
 	},
 "projectSettings": {
 	"abortBuildOnError": 1,
