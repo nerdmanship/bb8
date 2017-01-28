@@ -2508,6 +2508,14 @@
 		"oF": 0,
 		"oS": 0
 		},
+	"\/src\/pug\/artwork2.pug": {
+		"cOD": 1,
+		"ft": 512,
+		"oA": 1,
+		"oAP": "\/dist\/pug\/artwork2.html",
+		"oF": 0,
+		"oS": 0
+		},
 	"\/src\/pug\/controls.pug": {
 		"cOD": 1,
 		"ft": 512,
