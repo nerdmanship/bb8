@@ -46,6 +46,8 @@ var o = {
     },
     bindEvents: function bindEvents() {
         this.bb8.bb8.addEventListener("mouseup", this.animate.bind(this));
+        this.bb8.bb8.addEventListener("mouseover", this.slowMoOn.bind(this));
+        this.bb8.bb8.addEventListener("mouseout", this.slowMoOff.bind(this));
     },
     setStart: function setStart() {
         TweenMax.set(this.largeMask, { scale: 0, transformOrigin: "center" });
@@ -208,6 +210,16 @@ var o = {
     recordProgress: function recordProgress() {
         for (var i = 0; i < o.gravel.length; i++) {
             o.prevGravelProgress[i] = o.currentTl[i].progress();
+        }
+    },
+    slowMoOn: function slowMoOn() {
+        for (var i = 0; i < o.currentTl.length; i++) {
+            TweenMax.to(o.currentTl[i], 0.1, { timeScale: 0.05 });
+        }
+    },
+    slowMoOff: function slowMoOff() {
+        for (var i = 0; i < o.currentTl.length; i++) {
+            TweenMax.to(o.currentTl[i], 0.1, { timeScale: 1 });
         }
     },
     spinHead: function spinHead() {
