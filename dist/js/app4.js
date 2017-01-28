@@ -143,7 +143,7 @@ var o = {
             }
 
             // Create an individual timeline
-            var tl = new TimelineMax({ repeat: 100 });
+            var tl = new TimelineMax({ repeat: 2000 });
 
             // Define the tween and set the playhead at correct progress
             tl.fromTo(o.gravel[i], speed, { x: fromX }, { x: toX, ease: Linear.easeNone }).progress(o.gravelProgress[i]).paused(true);
