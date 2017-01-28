@@ -50,6 +50,7 @@ var o = {
         this.bb8.bb8.addEventListener("mouseout", this.slowMoOff.bind(this));
     },
     setStart: function setStart() {
+        TweenMax.set(this.svg, { autoAlpha: 1 });
         TweenMax.set(this.largeMask, { scale: 0, transformOrigin: "center" });
         TweenMax.set(this.bb8.bb8, { y: 3500, x: 2900, scale: 2.5, transformOrigin: "center bottom" });
         TweenMax.set(this.bb8.rotatingHead, { rotation: 20, transformOrigin: "center" });

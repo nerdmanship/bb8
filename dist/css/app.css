@@ -428,4 +428,5 @@ template {
 .artwork {
   position: relative;
   max-height: 90%;
-  margin: 20px; }
+  margin: 20px;
+  opacity: 0; }
