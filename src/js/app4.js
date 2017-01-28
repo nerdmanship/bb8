@@ -170,7 +170,7 @@ var o = {
             }
             
             // Create an individual timeline
-            var tl = new TimelineMax( {repeat: 100 });
+            var tl = new TimelineMax( {repeat: 2000 });
             
 
             // Define the tween and set the playhead at correct progress
