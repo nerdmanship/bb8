@@ -1,12 +1,19 @@
 "use strict";
 
-// Fix the gravel
+// Connect iris and highlights to headNull
 
 function random(min, max) {
     if (max === null) {
         max = min;min = 0;
     }
     return Math.random() * (max - min) + min;
+}
+
+function chanceRoll(chance) {
+    if (chance === null) {
+        chance = 50;
+    }
+    return chance > 0 && Math.random() * 100 <= chance;
 }
 
 window.requestAnimFrame = function () {
@@ -16,13 +23,23 @@ window.requestAnimFrame = function () {
 }();
 
 var o = {
+    // Keep track on timelines to be turned on and off on direction change
     isIntro: true,
     isRollingLeft: false,
     currentTl: [],
     currentGravelTl: [],
     gravelProgress: [],
     prevGravelProgress: [],
-
+    // Head light status on/off
+    lightsOnOff: [0, 0],
+    // Wiggle head
+    wiggleFrame: 0,
+    allTheTime: 0,
+    ranDur: 0,
+    ranPos: 0,
+    nowAndThen: 0,
+    moveAmount: 0,
+    // Null object to parallax head components
     headNull: {
         value: 0
     },
@@ -32,6 +49,7 @@ var o = {
         this.bindEvents();
         this.setStart();
         this.connectHeadToNull();
+        this.blinkLights();
         this.animate();
     },
     cacheDOM: function cacheDOM() {
@@ -39,7 +57,7 @@ var o = {
         this.gravelGroup = this.svg.querySelector("[data-bb8=gravelGroup]");
         this.gravel = this.svg.querySelectorAll("[data-bb8=gravel]");
         this.largeMask = this.svg.querySelector("[data-bb8=largeMask]");
-        this.animElems = ["bb8", "unit", "bodySurface", "rotatingHead", "headShadowBig", "headShadowSmall", "bouncingHead", "antennaLong", "antennaShort", "headSurface", "littleEye", "bigEye", "pupil1", "pupil2", "pupil3", "pupil4"];
+        this.animElems = ["bb8", "unit", "bodySurface", "rotatingHead", "headShadowBig", "headShadowSmall", "bouncingHead", "antennaLong", "antennaShort", "headSurface", "upperLight", "lowerLight", "littleEye", "bigEye", "pupil1", "pupil2", "pupil3", "pupil4"];
         this.bb8 = {};
         for (var i = 0; i < this.animElems.length; i++) {
             this.bb8[this.animElems[i]] = this.svg.querySelector("[data-bb8=" + this.animElems[i] + "]");
@@ -47,8 +65,8 @@ var o = {
     },
     bindEvents: function bindEvents() {
         this.bb8.bb8.addEventListener("mouseup", this.animate.bind(this));
-        this.bb8.bb8.addEventListener("mouseover", this.slowMoOn.bind(this));
-        this.bb8.bb8.addEventListener("mouseout", this.slowMoOff.bind(this));
+        //this.bb8.bb8.addEventListener("mouseover", this.slowMoOn.bind(this));
+        //this.bb8.bb8.addEventListener("mouseout", this.slowMoOff.bind(this));
     },
     setStart: function setStart() {
         TweenMax.set(this.svg, { autoAlpha: 1 });
@@ -76,7 +94,7 @@ var o = {
         } else {
             spinDir = "+=360";
         }
-        var tl = new TimelineMax();
+        var tl = new TimelineMax({ onUpdate: o.wiggleHead });
 
         // Define multi directional roll animation here
         tl
@@ -98,7 +116,8 @@ var o = {
         // ...
 
         // Spinning head
-        .fromTo(this.headNull, 1, { value: 1 }, { value: -1, ease: Linear.easeNone, repeat: 500, yoyo: true }, 0);
+        //.fromTo(this.headNull, 1, { value: 1 }, { value: -1, ease: Linear.easeNone, repeat: 500, yoyo:true }, 0)
+        ;
 
         tls[tls.length] = tl;
         return tls;
@@ -189,12 +208,15 @@ var o = {
 
     roll: function roll(direction) {
 
-        // Record the progress value where each gravel stopped
+        // If first time roll is called
         if (o.currentTl.length != 1) {
             o.recordProgress();
         }
 
+        // Record the progress value where each gravel stopped
         var tls = o.getRollAnims(direction);
+        // Start wiggle head
+        //o.wiggleHead();
 
         for (var i = 0; i < o.currentTl.length; i++) {
             o.currentTl[i].kill();
@@ -230,8 +252,8 @@ var o = {
             var headSurfaceCenter = -50;
             var bigEyeCenter = 217 + headSurfaceCenter;
             var littleEyeCenter = 385 + headSurfaceCenter;
-            var antennaShortCenter = 0;
-            var antennaLongCenter = 0;
+            var antennaShortCenter = -50;
+            var antennaLongCenter = -50;
         }
         // Update value
         val = o.headNull.value;
@@ -240,8 +262,8 @@ var o = {
         headSurfacePos = val * 150;
         bigEyePos = val * 150;
         littleEyePos = val * 150;
-        antennaShortPos = -val * 150;
-        antennaLongPos = -val * 100;
+        antennaShortPos = -val * 120;
+        antennaLongPos = -val * 70;
 
         TweenMax.set(o.bb8.headSurface, { x: headSurfaceCenter + headSurfacePos });
 
@@ -251,6 +273,50 @@ var o = {
         TweenMax.set(o.bb8.antennaLong, { x: antennaLongCenter + antennaLongPos });
 
         window.requestAnimFrame(o.connectHeadToNull);
+    },
+    wiggleHead: function wiggleHead() {
+
+        if (o.wiggleFrame === o.allTheTime) {
+
+            o.allTheTime = Math.floor(random(20, 40)); // How often does it wiggle
+
+            o.ranDur = o.allTheTime / 60; // How fast does it wiggle
+
+            o.ranPos = random(0.05, 0.1); // How much does it wiggle
+            o.nowAndThen = chanceRoll(50); // How often does the head move
+            o.moveAmount = random(-1, 1); // Takes random place on its range
+
+            // Wiggle or move the head
+            if (o.nowAndThen) {
+                TweenMax.to(o.headNull, o.ranDur, { value: o.moveAmount, ease: Power3.easeInOut });
+            } else {
+                TweenMax.to(o.headNull, o.ranDur, { value: "+=" + o.ranPos, ease: SlowMo.ease.config(0.1, 0.1, true) });
+            }
+
+            o.wiggleFrame = 0; // Reset wiggleFrame count
+        }
+
+        o.wiggleFrame++;
+        //window.requestAnimFrame(o.wiggleHead);
+    },
+    blinkLights: function blinkLights() {
+
+        // One in 10 there is a change
+        if (chanceRoll(10)) {
+
+            for (var i = 0; i < 2; i++) {
+                if (chanceRoll(50)) {
+                    o.lightsOnOff[i] = 1;
+                } else {
+                    o.lightsOnOff[i] = 0;
+                }
+            }
+        }
+
+        TweenLite.set(o.bb8.upperLight, { autoAlpha: o.lightsOnOff[0] });
+        TweenLite.set(o.bb8.lowerLight, { autoAlpha: o.lightsOnOff[1] });
+
+        window.requestAnimFrame(o.blinkLights);
     }
 };
 
