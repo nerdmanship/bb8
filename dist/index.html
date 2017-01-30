@@ -216,9 +216,11 @@
               </g>
             </g>
             <g id="A-bb8-X" data-bb8="bb8" transform="translate(532 992)">
-              <ellipse id="shadow-ground" cx="1030.5" cy="1338" fill="#000000" opacity=".2" rx="408.5" ry="96"></ellipse>
-              <ellipse id="shadow-ground-small-copy" cx="994" cy="1338" fill="#000000" opacity=".074" rx="268.5" ry="63.176"></ellipse>
-              <ellipse id="shadow-ground-small" cx="970.5" cy="1349" fill="#000000" opacity=".124" rx="157.5" ry="37"></ellipse>
+              <g data-bb8="bodyShadow">
+                <ellipse id="shadow-ground" cx="1030.5" cy="1338" fill="#000000" opacity=".2" rx="408.5" ry="96"></ellipse>
+                <ellipse id="shadow-ground-small-copy" cx="994" cy="1338" fill="#000000" opacity=".074" rx="268.5" ry="63.176"></ellipse>
+                <ellipse id="shadow-ground-small" cx="970.5" cy="1349" fill="#000000" opacity=".124" rx="157.5" ry="37"></ellipse>
+              </g>
               <g id="A-unit-Y" data-bb8="unit">
                 <g id="body" transform="translate(543 543)">
                   <mask id="mask-7" fill="white">
@@ -630,18 +632,18 @@
                               </mask>
                               <use id="Mask" fill="#1C1C1C" xlink:href="#path-37"></use>
                               <g mask="url(#mask-38)">
-                                <g transform="translate(26 26)">
+                                <g data-bb8="pupilGroup" transform="translate(26 26)">
                                   <ellipse id="A-red-eye-1-XY" data-bb8="pupil1" cx="28.147" cy="28.147" fill="#411414" rx="28.147" ry="28.147"></ellipse>
                                   <ellipse id="A-red-eye-2-XY" data-bb8="pupil2" cx="28.517" cy="28.517" fill="#FF0006" opacity=".319" rx="16.517" ry="16.517"></ellipse>
                                   <ellipse id="A-red-eye-3-XY" data-bb8="pupil3" cx="27.938" cy="27.938" fill="#FF0006" opacity=".319" rx="8.938" ry="8.938"></ellipse>
                                   <ellipse id="A-red-eye-4-XY" data-bb8="pupil4" cx="28.697" cy="28.697" fill="#EEEEEE" opacity=".78" rx="2.697" ry="2.697"></ellipse>
                                 </g>
+                                <g id="big-eye-statics" data-bb8="eyeHighlight" transform="translate(15 3)">
+                                  <path id="eye-highlight" fill="#F2F2F2" d="M27.786 23.09c13.335-3.575 25.22-6.924 24.08-11.183-1.142-4.26-14.877-7.815-28.212-4.242-13.335 3.573-21.22 12.922-20.08 17.18 1.142 4.26 10.877 1.817 24.212-1.756z" opacity=".26"></path>
+                                  <circle id="flair-1" cx="64.5" cy="29.5" r="5.5" fill="#FFFFFF" opacity=".582"></circle>
+                                  <circle id="flair-2" cx="65" cy="30" r="12" fill="#FFFFFF" opacity=".133"></circle>
+                                </g>
                               </g>
-                            </g>
-                            <g id="big-eye-statics" transform="translate(15 3)">
-                              <path id="eye-highlight" fill="#F2F2F2" d="M27.786 23.09c13.335-3.575 25.22-6.924 24.08-11.183-1.142-4.26-14.877-7.815-28.212-4.242-13.335 3.573-21.22 12.922-20.08 17.18 1.142 4.26 10.877 1.817 24.212-1.756z" opacity=".26"></path>
-                              <circle id="flair-1" cx="64.5" cy="29.5" r="5.5" fill="#FFFFFF" opacity=".582"></circle>
-                              <circle id="flair-2" cx="65" cy="30" r="12" fill="#FFFFFF" opacity=".133"></circle>
                             </g>
                           </g>
                         </g>
