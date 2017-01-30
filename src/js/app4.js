@@ -24,13 +24,14 @@ var o = {
     prevGravelProgress: [],
 
     headNull: {
-        value: 1
+        value: 0
     },
 
     init: function() {
         this.cacheDOM();
         this.bindEvents();
         this.setStart();
+        this.connectHeadToNull();
         this.animate();
     },
     cacheDOM: function() {
@@ -106,7 +107,7 @@ var o = {
             // ...
             
             // Spinning head
-            .to(this.headNull, 1, { value: -1, ease: Linear.easeNone, repeat: 500, yoyo:true }, 0)
+            .fromTo(this.headNull, 1, { value: 1 }, { value: -1, ease: Linear.easeNone, repeat: 500, yoyo:true }, 0)
             ;
     
         tls[tls.length] = tl;
@@ -122,8 +123,9 @@ var o = {
             .to(this.bb8.bb8, 5.5, { x: 2000, y: 4300, scale: 3, ease: Elastic.easeOut.config(10) }, "bb8-in")
             .to(this.bb8.bodySurface, 5.5, { rotation: -30, transformOrigin: "center", ease: Elastic.easeOut.config(10) }, "bb8-in")
 
-            .to(this.bb8.rotatingHead, 0.1, { rotation: -20, transformOrigin: "center", ease: Elastic.easeInOut.config(1) }, "bb8-in =+0.3")
-            .to(this.bb8.rotatingHead, 5.1, { rotation: -15, transformOrigin: "center", ease: Elastic.easeOut.config(2) }, "bb8-in =+0.4")
+            .to(this.bb8.rotatingHead, 0.1, { rotation: -20, transformOrigin: "center" }, "bb8-in =+0.3")
+            .to(this.bb8.rotatingHead, 0.1, { rotation: 20, transformOrigin: "center" }, "bb8-in =+1.4")
+            .to(this.bb8.rotatingHead, 3, { rotation: -15, transformOrigin: "center", ease: Elastic.easeOut.config(0.5) }, "bb8-in =+1.5")
             .to(this.bb8.bouncingHead, 0.2, { y: "-=10", ease: Power3.easeInOut, repeat: 2, yoyo: true, repeatDelay: 0.4 }, "bb8-in =+2")
             .to(this.bb8.bouncingHead, 0.35, { y: "+=15", ease: Power1.easeInOut, repeat: 2, yoyo: true, repeatDelay: 0.2 }, "bb8-in =+3.4")
             .to(this.bb8.bouncingHead, 0.275, { y: "-=5", repeat: 1, yoyo: true, repeatDelay: 0.1, ease: Power4.easeInOut }, "bb8-in =+4.85")
@@ -254,15 +256,34 @@ var o = {
             TweenMax.to(o.currentTl[i], 0.1, { timeScale: 1 });
         }  
     },
-    spinHead: function() {
-        var val = o.headNull.value;
-        TweenMax.set(o.bb8.headSurface, { x: val*120 });
-        TweenMax.set(o.bb8.bigEye, { x: val*127 });
-        TweenMax.set(o.bb8.littleEye, { x: val*125 });
-        TweenMax.set(o.bb8.antennaShort, { x: -val*150 });
-        TweenMax.set(o.bb8.antennaLong, { x: -val*100 });
-        // centerVal +/- null * range
-        window.requestAnimFrame(o.spinHead);
+    connectHeadToNull: function() {
+        if (!val) {
+            var val, headSurfacePos, bigEyePos, littleEyePos, antennaShortPos, antennaLongPos;
+            var headSurfaceCenter = -50;
+            var bigEyeCenter = 217+headSurfaceCenter;
+            var littleEyeCenter = 385+headSurfaceCenter;
+            var antennaShortCenter = 0;
+            var antennaLongCenter = 0;
+        }
+        // Update value
+        val = o.headNull.value;
+        
+        // null value (+/-1) * range/2
+        headSurfacePos = val*150;
+        bigEyePos = val*150;
+        littleEyePos = val*150;
+        antennaShortPos = -val*150;
+        antennaLongPos = -val*100;
+
+        TweenMax.set(o.bb8.headSurface, { x: headSurfaceCenter + headSurfacePos });
+
+        TweenMax.set(o.bb8.bigEye, { x: bigEyeCenter + bigEyePos });
+        TweenMax.set(o.bb8.littleEye, { x: littleEyeCenter + littleEyePos });
+        TweenMax.set(o.bb8.antennaShort, { x: antennaShortCenter + antennaShortPos });
+        TweenMax.set(o.bb8.antennaLong, { x: antennaLongCenter + antennaLongPos });
+
+        
+        window.requestAnimFrame(o.connectHeadToNull);
     }
 };
 
